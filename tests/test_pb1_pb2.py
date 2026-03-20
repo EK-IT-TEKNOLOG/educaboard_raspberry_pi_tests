@@ -1,10 +1,15 @@
-from gpiozero import Button
+import pigpio
+from time import sleep
 
-pb1 = Button(4)
-pb2 = Button(17)
+PB1_GPIO = 4
+PB2_GPIO = 17
+pi = pigpio.pi()
+pi.set_pull_up_down(PB2_GPIO, pigpio.PUD_UP)
+
 while True:
-    if pb1.is_pressed:
-        print("pb1 is pressed")
-    if pb2.is_pressed:
-        print("pb2 is pressed")
+    if pi.read(PB1_GPIO) == 0:
+        print('pb1 pressed')
 
+    if pi.read(PB2_GPIO) == 0:
+        print('pb2 pressed')
+    sleep(.5)
